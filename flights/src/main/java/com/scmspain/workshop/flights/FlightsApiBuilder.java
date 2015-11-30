@@ -2,7 +2,7 @@ package com.scmspain.workshop.flights;
 
 import retrofit.RestAdapter;
 
-public class FlightsApiBilder {
+public class FlightsApiBuilder {
   static public FlightsApi  getFlightsApi(String endpoint) {
     RestAdapter restAdapter = new RestAdapter.Builder()
         .setEndpoint(endpoint)

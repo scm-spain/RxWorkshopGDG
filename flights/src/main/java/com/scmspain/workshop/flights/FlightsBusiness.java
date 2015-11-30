@@ -20,7 +20,7 @@ public class FlightsBusiness {
   public FlightsBusiness(String[] flightProviderEndpoints) {
     flightProviders = new ArrayList<>(flightProviderEndpoints.length);
     for (String flightProviderEndpoint : flightProviderEndpoints) {
-      flightProviders.add(FlightsApiBilder.getFlightsApi(flightProviderEndpoint));
+      flightProviders.add(FlightsApiBuilder.getFlightsApi(flightProviderEndpoint));
     }
   }
 
