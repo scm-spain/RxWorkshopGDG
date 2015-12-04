@@ -1,3 +1,4 @@
 <resources>
   <string name="app_name">Flights</string>
+  <string name="title_activity_flights">FlightsActivity</string>
 </resources>
