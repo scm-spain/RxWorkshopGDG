@@ -7,58 +7,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.scmspain.workshop.flights.Flight;
 import com.scmspain.workshop.flights.R;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.FlightsViewHolder> {
 
   public List<Flight> flights;
-  private HashMap<Long, Integer> idToPositionMap;
 
   public FlightsAdapter(List<Flight> flights) {
     this.flights = flights;
-    idToPositionMap = new HashMap<>();
   }
 
-  public void addFlight(Flight flight, int position) {
-    if (notContainFlight(flight)) {
-      flights.add(position, flight);
-      notifyItemInserted(position);
-      if (position + 2 <= flights.size()) {
-        notifyDataSetChanged();
-      }
-    } else {
-      notifyItemMoved(getPosition(flight), position);
-    }
-
-  }
-
-  public int getPosition(Flight flight) {
-    int position = 0;
-    for (Flight flightElement : flights) {
-      if (flight.id.equals(flightElement.id)) {
-        return position;
-      }
-      position++;
-    }
-    return position;
-  }
-
-  public void addFlights(List<Flight> flights) {
-    int position = 0;
-    for (Flight flight : flights) {
-      addFlight(flight, position);
-      position++;
-    }
-  }
-
-  private Boolean notContainFlight(Flight flight) {
-    for (Flight flightElement : flights) {
-      if (flight.id.equals(flightElement.id)) {
-        return false;
-      }
-    }
-    return true;
+  @Override
+  public long getItemId(int position) {
+    return flights.get(position).id.hashCode();
   }
 
   @Override
@@ -82,6 +46,12 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.FlightsV
   @Override
   public int getItemCount() {
     return flights.size();
+  }
+
+  public void setFlights(Collection<Flight> flights) {
+    this.flights.clear();
+    this.flights.addAll(flights);
+    notifyDataSetChanged();
   }
 
   public static class FlightsViewHolder extends RecyclerView.ViewHolder {

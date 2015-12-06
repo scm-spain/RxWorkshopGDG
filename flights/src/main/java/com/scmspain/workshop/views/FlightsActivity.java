@@ -60,7 +60,7 @@ public class FlightsActivity extends AppCompatActivity {
           }
 
           @Override public void onNext(Collection<Flight> flightList) {
-            adapter.addFlights(new ArrayList(flightList));
+            adapter.setFlights(flightList);
           }
         });
   }
