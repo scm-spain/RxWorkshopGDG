@@ -10,7 +10,7 @@ import rx.functions.Func1;
 
 public class FlightsBusiness {
   private final ArrayList<FlightsApi> flightProviders;
-  private final Comparator<Flight> flightComparator = new Comparator<Flight>() {
+  protected final Comparator<Flight> flightComparator = new Comparator<Flight>() {
     @Override
     public int compare(Flight lhs, Flight rhs) {
       return lhs.price - rhs.price;

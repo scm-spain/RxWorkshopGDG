@@ -2,9 +2,24 @@ package com.scmspain.workshop.flights;
 
 import android.support.annotation.NonNull;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.google.gson.Gson;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.concurrent.TimeUnit;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
+import rx.Observable;
+import rx.Observer;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.functions.Func2;
+import rx.observers.TestSubscriber;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -14,6 +29,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FlightsUnitTest {
   @Rule
   public WireMockRule wireMockServer = new WireMockRule(8080);
@@ -32,7 +48,7 @@ public class FlightsUnitTest {
   }
 
   @Test
-  public void testSomeFlights() throws Exception {
+  public void testSomeSyncFlights() throws Exception {
     FlightsBusiness flightsBusiness = new FlightsBusiness(getMockedProviders());
 
     Collection<Flight> list = flightsBusiness.flightsByPrice();
@@ -118,5 +134,31 @@ public class FlightsUnitTest {
 
     assertEquals(3000, array[3].price);
     assertEquals("USA Airlines", array[3].airline);
+  }
+
+  @Test
+  public void printFake() throws Exception {
+    FlightsFake flightsFake = new FlightsFake(new String[]{});
+    TestSubscriber<Collection<Flight>> ts = TestSubscriber.create(new Observer<Collection<Flight>>() {
+      @Override
+      public void onCompleted() {
+
+      }
+
+      @Override
+      public void onError(Throwable e) {
+
+      }
+
+      @Override
+      public void onNext(Collection<Flight> flights) {
+        System.out.println(flights.size());
+        for (Flight flight : flights) {
+          System.out.println("flight = " + flight.airline);
+        }
+      }
+    });
+    flightsFake.incrementalFlightsByPriceObservable().subscribe(ts);
+    ts.awaitTerminalEvent();
   }
 }

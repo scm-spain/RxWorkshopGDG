@@ -15,6 +15,14 @@
             <option value="$PROJECT_DIR$/frodo" />
           </set>
         </option>
+        <option name="myModules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/basics" />
+            <option value="$PROJECT_DIR$/flights" />
+            <option value="$PROJECT_DIR$/frodo" />
+          </set>
+        </option>
       </GradleProjectSettings>
     </option>
   </component>

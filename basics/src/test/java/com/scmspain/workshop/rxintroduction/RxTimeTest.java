@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import rx.Observable;
 import rx.Observer;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.observers.TestSubscriber;
@@ -92,14 +93,8 @@ public class RxTimeTest {
             return aLong1.intValue();
           }
         })
-        .doOnNext(new Action1<Integer>() {
-          @Override
-          public void call(Integer integer) {
-            System.out.println("Emit " + integer);
-          }
-        })
         .take(10)
-        .flatMap(new Func1<Integer, Observable<String>>() {
+        .concatMap(new Func1<Integer, Observable<String>>() {
           @Override
           public Observable<String> call(final Integer aInt) {
             return Observable.interval(0, 500, TimeUnit.MILLISECONDS)
@@ -107,6 +102,12 @@ public class RxTimeTest {
                   @Override
                   public String call(Long aLong) {
                     return new Date().getTime() + " " + aInt + "->" + aLong;
+                  }
+                })
+                .doOnSubscribe(new Action0() {
+                  @Override
+                  public void call() {
+                    System.out.println("Emit " + aInt);
                   }
                 })
                 .take(aInt);
@@ -117,5 +118,5 @@ public class RxTimeTest {
     testSubscriber.awaitTerminalEvent();
     System.out.println();
   }
-/**/
+*/
 }

@@ -21,7 +21,7 @@ retrolambda {
 
 android {
   compileSdkVersion 23
-  buildToolsVersion "23.0.2"
+  buildToolsVersion '23.0.2'
 
   defaultConfig {
     applicationId "com.scmspain.workshop.rxintroduction"
