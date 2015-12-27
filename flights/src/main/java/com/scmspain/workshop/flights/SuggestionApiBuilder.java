@@ -1,12 +1,15 @@
 package com.scmspain.workshop.flights;
 
-import retrofit.RestAdapter;
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
 
 public class SuggestionApiBuilder {
   static public SuggestionApi  getSuggestionApi(String endpoint) {
-    RestAdapter restAdapter = new RestAdapter.Builder()
-        .setEndpoint(endpoint)
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(endpoint)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .build();
-    return restAdapter.create(SuggestionApi.class);
+    return retrofit.create(SuggestionApi.class);
   }
 }

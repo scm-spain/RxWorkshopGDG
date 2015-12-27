@@ -1,5 +1,6 @@
 package com.scmspain.workshop.flights;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,15 +25,15 @@ public class FlightsBusiness {
     }
   }
 
-  public ArrayList<Flight> flights() {
+  public ArrayList<Flight> flights() throws IOException {
     ArrayList<Flight> flights = new ArrayList<>();
     for (FlightsApi flightProvider : flightProviders) {
-      flights.add(flightProvider.getFlight());
+      flights.add(flightProvider.getFlight().execute().body());
     }
     return flights;
   }
 
-  public List<Flight> flightsByPrice() {
+  public List<Flight> flightsByPrice() throws IOException {
     ArrayList<Flight> flights = flights();
     Collections.sort(flights, flightComparator);
     return flights;
