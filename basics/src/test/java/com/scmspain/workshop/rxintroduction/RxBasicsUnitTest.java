@@ -13,16 +13,16 @@ import static org.junit.Assert.*;
  */
 public class RxBasicsUnitTest {
   @Test
-  public void print4() throws Exception {
-    System.out.println("print4()");
+  public void printInteger() throws Exception {
+    System.out.println("printInteger()");
 
-    Observable<Integer> just4Observable = RxBasics.getJust4Observable();
-    System.out.println("print4() - Observable created");
+    Observable<Integer> integerObservableObservable = RxBasics.getIntegerObservable();
+    System.out.println("printInteger() - Observable created");
 
     Observer<Integer> integerObserver = new Observer<Integer>() {
       @Override
       public void onCompleted() {
-        System.out.println("print4() --- onCompleted");
+        System.out.println("printInteger() --- onCompleted");
       }
 
       @Override
@@ -32,22 +32,21 @@ public class RxBasicsUnitTest {
 
       @Override
       public void onNext(Integer integer) {
-        System.out.println("print4() --- onNext: "+integer);
+        System.out.println("printInteger() --- onNext: "+integer);
       }
     };
-    System.out.println("print4() - Observer created");
+    System.out.println("printInteger() - Observer created");
 
-    System.out.println("print4() - Before Subscribe");
-    just4Observable.subscribe(integerObserver);
-    System.out.println("print4() - After Subscribe");
+    System.out.println("printInteger() - Before Subscribe");
+    integerObservableObservable.subscribe(integerObserver);
+    System.out.println("printInteger() - After Subscribe");
   }
 
   @Test
   public void printAMap() throws Exception {
-    Observable<Integer> mockObservable = Observable.just(4);
+    Observable<Integer> integerObservableObservable = RxBasics.getIntegerObservable();
 
-    Observable<Integer> observable = mockObservable.map(RxBasics.multiplyByTen());
-    // RxBasics.mapToVerboseString
+    Observable<Integer> observable = integerObservableObservable.map(RxBasics.multiplyByTen());
 
     observable.subscribe(new Action1<Integer>() {
       @Override
@@ -63,8 +62,20 @@ public class RxBasicsUnitTest {
   }
 
   @Test
-  public void testJust4() throws Exception {
-    Integer result = RxBasics.getJust4Observable().toBlocking().single();
+  public void printWords() throws Exception {
+    // TODO: Create the observable, and print each string it returns
+    // Observable<String> stringObservableObservable = RxBasics.getStringObservable();
+  }
+
+  @Test
+  public void printWordsLength() throws Exception {
+    //TODO: Using RxBasics.getStringObservable()
+    //stringObservableObservable.map(RxBasics.stringToLength());
+  }
+
+  @Test
+  public void testIntegerObservableReturnsJust4() throws Exception {
+    Integer result = RxBasics.getIntegerObservable().toBlocking().single();
     assertEquals(4,result.intValue());
   }
 

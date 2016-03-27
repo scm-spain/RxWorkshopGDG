@@ -1,8 +1,7 @@
-package com.scmspain.workshop.flights;
+package com.scmspain.workshop.suggestion;
 
 import java.util.List;
 import rx.Observable;
-import rx.functions.Func1;
 
 public class SuggestionBusiness {
   static final String ENDPOINT = "http://autocomplete.wunderground.com";

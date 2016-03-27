@@ -1,4 +1,4 @@
-package com.scmspain.workshop.flights;
+package com.scmspain.workshop.suggestion;
 
 import retrofit.RestAdapter;
 

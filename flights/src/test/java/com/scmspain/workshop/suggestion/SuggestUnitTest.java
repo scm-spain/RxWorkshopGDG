@@ -1,9 +1,7 @@
-package com.scmspain.workshop.flights;
+package com.scmspain.workshop.suggestion;
 
 import android.support.annotation.NonNull;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.junit.Ignore;
@@ -11,8 +9,6 @@ import org.junit.Test;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
-import rx.functions.Action0;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.observers.TestSubscriber;
 

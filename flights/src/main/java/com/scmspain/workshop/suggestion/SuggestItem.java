@@ -1,4 +1,4 @@
-package com.scmspain.workshop.flights;
+package com.scmspain.workshop.suggestion;
 
 public class SuggestItem {
   String name;

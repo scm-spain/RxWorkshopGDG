@@ -68,7 +68,7 @@ public class RxTimeTest {
 
 /*
 @Test
-  public void testTimerOfTimers() throws Exception {
+  public void printTimerOfTimers() throws Exception {
     System.out.println("testTimerOfTimers");
     TestSubscriber<String> testSubscriber = new TestSubscriber<>(new Observer<String>() {
       @Override

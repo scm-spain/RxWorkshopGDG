@@ -6,7 +6,7 @@ import rx.Observable;
 import rx.functions.Func1;
 
 public class RxBasics {
-  public static Observable<Integer> getJust4Observable() {
+  public static Observable<Integer> getIntegerObservable() {
     return Observable.just(4);
     //return Observable.just(2,3,4,5);
     //return Observable.range(1,6);
