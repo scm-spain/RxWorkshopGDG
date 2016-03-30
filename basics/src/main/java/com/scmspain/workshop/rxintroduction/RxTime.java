@@ -22,7 +22,7 @@ public class RxTime {
 
 
 /*
-  static Observable<Date> now = Observable.create(new Observable.OnSubscribe<Date>() {
+  public static final Observable<Date> now = Observable.create(new Observable.OnSubscribe<Date>() {
     @Override
     public void call(Subscriber<? super Date> subscriber) {
       subscriber.onNext(new Date());

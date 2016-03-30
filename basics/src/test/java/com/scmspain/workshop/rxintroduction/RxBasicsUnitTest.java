@@ -78,10 +78,4 @@ public class RxBasicsUnitTest {
     Integer result = RxBasics.getIntegerObservable().toBlocking().single();
     assertEquals(4,result.intValue());
   }
-
-  @Test
-  public void testNowObservable() throws Exception {
-    Date result = RxBasics.getNowObservable().toBlocking().single();
-    assertEquals(new Date(), result);
-  }
 }

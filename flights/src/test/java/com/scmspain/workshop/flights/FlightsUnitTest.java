@@ -17,6 +17,9 @@ import static org.junit.Assert.assertEquals;
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
+
+//Never use FixMethodOrder, tests shouldn't depend on order to work
+//here is used to have reliable times between executions because the first tests have a penalty
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FlightsUnitTest {
   public static final int PORT = 8080;
