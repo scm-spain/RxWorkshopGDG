@@ -11,6 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,6 +31,8 @@ public class FlightsActivity extends AppCompatActivity {
 
     private FloatingActionButton refresh;
 
+    private Animation rotate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +45,14 @@ public class FlightsActivity extends AppCompatActivity {
     }
 
     private void initRefresh() {
+        rotate = AnimationUtils.loadAnimation(this, R.anim.rotate);
+        rotate.setRepeatCount(Animation.INFINITE);
+
         refresh = (FloatingActionButton) findViewById(R.id.refresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                refresh.startAnimation(rotate);
                 subscribeService();
             }
         });
@@ -73,6 +81,7 @@ public class FlightsActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted() {
                         System.out.println("completed");
+                        rotate.cancel();
                     }
 
                     @Override
