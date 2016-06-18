@@ -23,4 +23,4 @@ The workshop will have two main parts:
   - `FlightsUnitTest`we have a syncronous implementation to retrieve flights from a service, BUT..as the number of services grows the app goes slower, we need to do something to make ir faster.
   - `SuggestUnitTest` is great to have the flights but we need to choose where do we want to fly and to do it, why don't we implement a suggest?
 
-the `frodo` module is just an example of the frodo librar from Fernando Cejas.
+the `frodo` module is just an example of the frodo library from Fernando Cejas.
