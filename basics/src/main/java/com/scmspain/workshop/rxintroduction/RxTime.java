@@ -7,18 +7,18 @@ import rx.functions.Func1;
 
 public class RxTime {
 
-    public static final Observable<Long> interval = Observable.interval(1, TimeUnit.SECONDS);
+  public static final Observable<Long> interval = Observable.interval(1, TimeUnit.SECONDS);
 
-    public static final Observable<Date> now = Observable.just(new Date());
+  public static final Observable<Date> now = Observable.just(new Date());
 
-    public static Observable<Date> getDateEverySecond() {
-        return interval.flatMap(new Func1<Long, Observable<Date>>() {
-            @Override
-            public Observable<Date> call(Long aLong) {
-                return now;
-            }
-        });
-    }
+  public static Observable<Date> getDateEverySecond() {
+    return interval.flatMap(new Func1<Long, Observable<Date>>() {
+      @Override
+      public Observable<Date> call(Long aLong) {
+        return now;
+      }
+    });
+  }
 
 
 /*
