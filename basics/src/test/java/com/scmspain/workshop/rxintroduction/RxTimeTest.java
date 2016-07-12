@@ -59,8 +59,8 @@ public class RxTimeTest {
     for (Date date : dates) {
       System.out.println("newDate: " + date);
       assertTrue(
-        "New date should later than old\n new: " + date + "\n oldDate:" + oldDate,
-        date.after(oldDate)
+          "New date should later than old\n new: " + date + "\n oldDate:" + oldDate,
+          date.after(oldDate)
       );
       oldDate = date;
     }
@@ -75,10 +75,12 @@ public class RxTimeTest {
       public void onCompleted() {
         System.out.println("Completed");
       }
+
       @Override
       public void onError(Throwable e) {
         e.printStackTrace();
       }
+
       @Override
       public void onNext(String string) {
         System.out.println(string);
@@ -112,6 +114,7 @@ public class RxTimeTest {
           }
         })
         .subscribe(testSubscriber);
+
     testSubscriber.awaitTerminalEvent();
     System.out.println();
   }
