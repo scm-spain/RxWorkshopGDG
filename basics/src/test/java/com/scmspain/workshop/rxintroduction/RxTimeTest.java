@@ -59,8 +59,8 @@ public class RxTimeTest {
     for (Date date : dates) {
       System.out.println("newDate: " + date);
       assertTrue(
-          "New date should later than old\n new: " + date + "\n oldDate:" + oldDate,
-          date.after(oldDate)
+        "New date should later than old\n new: " + date + "\n oldDate:" + oldDate,
+        date.after(oldDate)
       );
       oldDate = date;
     }

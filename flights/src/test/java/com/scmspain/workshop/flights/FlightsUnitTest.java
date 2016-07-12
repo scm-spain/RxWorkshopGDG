@@ -30,8 +30,8 @@ public class FlightsUnitTest {
   @Test
   public void testOneSyncFlight() throws Exception {
     wireMockServer.stubFor(get(urlEqualTo("/flight")).willReturn(
-        aResponse().withBody("{\"id\":\"sa\",\"airline\":\"Spaniards Airlines\",\"price\":200}")
-            .withFixedDelay(100)));
+      aResponse().withBody("{\"id\":\"sa\",\"airline\":\"Spaniards Airlines\",\"price\":200}")
+        .withFixedDelay(100)));
 
     FlightsBusiness business = new FlightsBusiness(new String[] { WIREMOCK_URL });
     Flight result = business.flights().get(0);
@@ -52,8 +52,8 @@ public class FlightsUnitTest {
   @Test
   public void testOneRxFlight() throws Exception {
     wireMockServer.stubFor(get(urlEqualTo("/flight")).willReturn(
-        aResponse().withBody("{\"id\":\"sa\",\"airline\":\"Spaniards Airlines\",\"price\":200}")
-            .withFixedDelay(100)));
+      aResponse().withBody("{\"id\":\"sa\",\"airline\":\"Spaniards Airlines\",\"price\":200}")
+        .withFixedDelay(100)));
 
     FlightsBusiness business = new FlightsBusiness(new String[] { WIREMOCK_URL });
     Flight result = business.flightsObservable().toBlocking().single();
@@ -67,8 +67,8 @@ public class FlightsUnitTest {
     FlightsBusiness flightsBusiness = new FlightsBusiness(getMockedProviders());
 
     Collection<Flight> list = flightsBusiness.flightsByPriceObservable()
-        .toBlocking()
-        .single();
+      .toBlocking()
+      .single();
 
     assertFlights(list);
   }
@@ -78,8 +78,8 @@ public class FlightsUnitTest {
     FlightsBusiness flightsBusiness = new FlightsBusiness(getMockedProviders());
 
     Collection<Flight> list = flightsBusiness.incrementalFlightsByPriceObservable()
-        .toBlocking()
-        .first();
+      .toBlocking()
+      .first();
 
     Flight firstFlight = list.iterator().next();
     assertEquals(200, firstFlight.price);
@@ -91,14 +91,14 @@ public class FlightsUnitTest {
     FlightsBusiness flightsBusiness = new FlightsBusiness(getMockedProviders());
 
     Collection<Flight> list = flightsBusiness.incrementalFlightsByPriceObservable()
-        .doOnNext(new Action1<Collection<Flight>>() {
-          @Override
-          public void call(Collection<Flight> flights) {
-            printFlights(flights);
-          }
-        })
-        .toBlocking()
-        .last();
+      .doOnNext(new Action1<Collection<Flight>>() {
+        @Override
+        public void call(Collection<Flight> flights) {
+          printFlights(flights);
+        }
+      })
+      .toBlocking()
+      .last();
 
     assertFlights(list);
   }
@@ -106,23 +106,23 @@ public class FlightsUnitTest {
   @NonNull
   private String[] getMockedProviders() {
     wireMockServer.stubFor(get(urlEqualTo("/sa/flight")).willReturn(
-        aResponse().withBody("{\"id\":\"sa\",\"airline\":\"Spaniards Airlines\",\"price\":200}")
-            .withFixedDelay(100)));
+      aResponse().withBody("{\"id\":\"sa\",\"airline\":\"Spaniards Airlines\",\"price\":200}")
+        .withFixedDelay(100)));
     wireMockServer.stubFor(get(urlEqualTo("/us/flight")).willReturn(
-        aResponse().withBody("{\"id\":\"us\",\"airline\":\"USA Airlines\",\"price\":3000}")
-            .withFixedDelay(600)));
+      aResponse().withBody("{\"id\":\"us\",\"airline\":\"USA Airlines\",\"price\":3000}")
+        .withFixedDelay(600)));
     wireMockServer.stubFor(get(urlEqualTo("/ba/flight")).willReturn(
-        aResponse().withBody("{\"id\":\"ba\",\"airline\":\"British Airlines\",\"price\":2000}")
-            .withFixedDelay(300)));
+      aResponse().withBody("{\"id\":\"ba\",\"airline\":\"British Airlines\",\"price\":2000}")
+        .withFixedDelay(300)));
     wireMockServer.stubFor(get(urlEqualTo("/ca/flight")).willReturn(
-        aResponse().withBody("{\"id\":\"ca\",\"airline\":\"Catalans Airlines\",\"price\":100}")
-            .withFixedDelay(200)));
+      aResponse().withBody("{\"id\":\"ca\",\"airline\":\"Catalans Airlines\",\"price\":100}")
+        .withFixedDelay(200)));
 
     return new String[] {
-        WIREMOCK_URL+"/sa",
-        WIREMOCK_URL+"/us",
-        WIREMOCK_URL+"/ba",
-        WIREMOCK_URL+"/ca"
+      WIREMOCK_URL+"/sa",
+      WIREMOCK_URL+"/us",
+      WIREMOCK_URL+"/ba",
+      WIREMOCK_URL+"/ca"
     };
   }
 
