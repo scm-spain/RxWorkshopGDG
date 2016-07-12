@@ -20,24 +20,30 @@ import static org.junit.Assert.assertEquals;
 
 //Never use FixMethodOrder, tests shouldn't depend on order to work
 //here is used to have reliable times between executions because the first tests have a penalty
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) public class FlightsUnitTest {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class FlightsUnitTest {
   public static final int PORT = 8080;
+
   public static final String WIREMOCK_URL = "http://127.0.0.1:" + PORT;
-  @Rule public WireMockRule wireMockServer = new WireMockRule(PORT);
 
-  @Test public void testOneSyncFlight() throws Exception {
+  @Rule
+  public WireMockRule wireMockServer = new WireMockRule(PORT);
+
+  @Test
+  public void testOneSyncFlight() throws Exception {
     wireMockServer.stubFor(get(urlEqualTo("/flight")).willReturn(
-        aResponse().withBody("{\"id\":\"sa\",\"airline\":\"Spaniards Airlines\",\"price\":200}")
-            .withFixedDelay(100)));
+            aResponse().withBody("{\"id\":\"sa\",\"airline\":\"Spaniards Airlines\",\"price\":200}")
+                    .withFixedDelay(100)));
 
-    FlightsBusiness business = new FlightsBusiness(new String[] { WIREMOCK_URL });
+    FlightsBusiness business = new FlightsBusiness(new String[]{WIREMOCK_URL});
     Flight result = business.flights().get(0);
 
     assertEquals("Spaniards Airlines", result.airline);
     assertEquals(200, result.price);
   }
 
-  @Test public void testSomeSyncFlights() throws Exception {
+  @Test
+  public void testSomeSyncFlights() throws Exception {
     FlightsBusiness flightsBusiness = new FlightsBusiness(getMockedProviders());
 
     Collection<Flight> list = flightsBusiness.flightsByPrice();
@@ -45,68 +51,80 @@ import static org.junit.Assert.assertEquals;
     assertFlights(list);
   }
 
-  @Test public void testOneRxFlight() throws Exception {
+  @Test
+  public void testOneRxFlight() throws Exception {
     wireMockServer.stubFor(get(urlEqualTo("/flight")).willReturn(
-        aResponse().withBody("{\"id\":\"sa\",\"airline\":\"Spaniards Airlines\",\"price\":200}")
-            .withFixedDelay(100)));
+            aResponse().withBody("{\"id\":\"sa\",\"airline\":\"Spaniards Airlines\",\"price\":200}")
+                    .withFixedDelay(100)));
 
-    FlightsBusiness business = new FlightsBusiness(new String[] { WIREMOCK_URL });
+    FlightsBusiness business = new FlightsBusiness(new String[]{WIREMOCK_URL});
     Flight result = business.flightsObservable().toBlocking().single();
 
     assertEquals("Spaniards Airlines", result.airline);
     assertEquals(200, result.price);
   }
 
-  @Test public void testSomeRxFlights() throws Exception {
+  @Test
+  public void testSomeRxFlights() throws Exception {
     FlightsBusiness flightsBusiness = new FlightsBusiness(getMockedProviders());
 
-    Collection<Flight> list = flightsBusiness.flightsByPriceObservable().toBlocking().single();
+    Collection<Flight> list = flightsBusiness.flightsByPriceObservable()
+            .toBlocking()
+            .single();
 
     assertFlights(list);
   }
 
-  @Test public void testIncrementalRxFlightsFirstResult() throws Exception {
+  @Test
+  public void testIncrementalRxFlightsFirstResult() throws Exception {
     FlightsBusiness flightsBusiness = new FlightsBusiness(getMockedProviders());
 
-    Collection<Flight> list =
-        flightsBusiness.incrementalFlightsByPriceObservable().toBlocking().first();
+    Collection<Flight> list = flightsBusiness.incrementalFlightsByPriceObservable()
+            .toBlocking()
+            .first();
 
     Flight firstFlight = list.iterator().next();
     assertEquals(200, firstFlight.price);
     assertEquals("Spaniards Airlines", firstFlight.airline);
   }
 
-  @Test public void testIncrementalRxFlightsLastResult() throws Exception {
+  @Test
+  public void testIncrementalRxFlightsLastResult() throws Exception {
     FlightsBusiness flightsBusiness = new FlightsBusiness(getMockedProviders());
 
     Collection<Flight> list = flightsBusiness.incrementalFlightsByPriceObservable()
-        .doOnNext(new Action1<Collection<Flight>>() {
-          @Override public void call(Collection<Flight> flights) {
-            printFlights(flights);
-          }
-        })
-        .toBlocking()
-        .last();
+            .doOnNext(new Action1<Collection<Flight>>() {
+              @Override
+              public void call(Collection<Flight> flights) {
+                printFlights(flights);
+              }
+            })
+            .toBlocking()
+            .last();
 
     assertFlights(list);
   }
 
-  @NonNull private String[] getMockedProviders() {
+  @NonNull
+  private String[] getMockedProviders() {
     wireMockServer.stubFor(get(urlEqualTo("/sa/flight")).willReturn(
-        aResponse().withBody("{\"id\":\"sa\",\"airline\":\"Spaniards Airlines\",\"price\":200}")
-            .withFixedDelay(100)));
+            aResponse().withBody("{\"id\":\"sa\",\"airline\":\"Spaniards Airlines\",\"price\":200}")
+                    .withFixedDelay(100)));
     wireMockServer.stubFor(get(urlEqualTo("/us/flight")).willReturn(
-        aResponse().withBody("{\"id\":\"us\",\"airline\":\"USA Airlines\",\"price\":3000}")
-            .withFixedDelay(600)));
+            aResponse().withBody("{\"id\":\"us\",\"airline\":\"USA Airlines\",\"price\":3000}")
+                    .withFixedDelay(600)));
     wireMockServer.stubFor(get(urlEqualTo("/ba/flight")).willReturn(
-        aResponse().withBody("{\"id\":\"ba\",\"airline\":\"British Airlines\",\"price\":2000}")
-            .withFixedDelay(300)));
+            aResponse().withBody("{\"id\":\"ba\",\"airline\":\"British Airlines\",\"price\":2000}")
+                    .withFixedDelay(300)));
     wireMockServer.stubFor(get(urlEqualTo("/ca/flight")).willReturn(
-        aResponse().withBody("{\"id\":\"ca\",\"airline\":\"Catalans Airlines\",\"price\":100}")
-            .withFixedDelay(200)));
+            aResponse().withBody("{\"id\":\"ca\",\"airline\":\"Catalans Airlines\",\"price\":100}")
+                    .withFixedDelay(200)));
 
-    return new String[] {
-        WIREMOCK_URL + "/sa", WIREMOCK_URL + "/us", WIREMOCK_URL + "/ba", WIREMOCK_URL + "/ca"
+    return new String[]{
+            WIREMOCK_URL + "/sa",
+            WIREMOCK_URL + "/us",
+            WIREMOCK_URL + "/ba",
+            WIREMOCK_URL + "/ca"
     };
   }
 

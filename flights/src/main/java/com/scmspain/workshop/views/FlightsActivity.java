@@ -71,7 +71,8 @@ public class FlightsActivity extends AppCompatActivity {
   }
 
   private void subscribeService() {
-    new FlightFakeServices().flightsFakeService.observeOn(AndroidSchedulers.mainThread())
+    new FlightFakeServices().flightsFakeService
+            .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Subscriber<Collection<Flight>>() {
           @Override public void onCompleted() {
             System.out.println("completed");
