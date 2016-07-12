@@ -1,10 +1,14 @@
 package com.scmspain.workshop.views;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import com.scmspain.workshop.flights.Flight;
 import com.scmspain.workshop.flights.FlightFakeServices;
 import com.scmspain.workshop.flights.R;
@@ -22,6 +26,10 @@ public class FlightsActivity extends AppCompatActivity {
 
   private FlightsAdapter adapter;
 
+  private FloatingActionButton refresh;
+
+  private Animation rotate;
+
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_flights);
@@ -29,6 +37,20 @@ public class FlightsActivity extends AppCompatActivity {
     setSupportActionBar(toolbar);
 
     initAdaptor();
+    initRefresh();
+  }
+
+  private void initRefresh() {
+    rotate = AnimationUtils.loadAnimation(this, R.anim.rotate);
+    rotate.setRepeatCount(Animation.INFINITE);
+
+    refresh = (FloatingActionButton) findViewById(R.id.refresh);
+    refresh.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        refresh.startAnimation(rotate);
+        subscribeService();
+      }
+    });
   }
 
   private void initAdaptor() {
@@ -42,7 +64,8 @@ public class FlightsActivity extends AppCompatActivity {
 
     flightsList.setAdapter(adapter);
 
-    flightsList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+    flightsList.setLayoutManager(
+        new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
     subscribeService();
   }
@@ -53,6 +76,7 @@ public class FlightsActivity extends AppCompatActivity {
         .subscribe(new Subscriber<Collection<Flight>>() {
           @Override public void onCompleted() {
             System.out.println("completed");
+            rotate.cancel();
           }
 
           @Override public void onError(Throwable e) {
