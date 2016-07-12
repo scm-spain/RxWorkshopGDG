@@ -13,8 +13,7 @@ public class RxTime {
 
   public static Observable<Date> getDateEverySecond() {
     return interval.flatMap(new Func1<Long, Observable<Date>>() {
-      @Override
-      public Observable<Date> call(Long aLong) {
+      @Override public Observable<Date> call(Long aLong) {
         return now;
       }
     });
@@ -29,6 +28,7 @@ public class RxTime {
       subscriber.onCompleted();
     }
   });
+
   static Observable<Integer> myWrongInterval =
       Observable.create(new Observable.OnSubscribe<Integer>() {
         @Override

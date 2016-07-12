@@ -52,8 +52,8 @@ public class FlightsUnitTest {
   @Test
   public void testOneRxFlight() throws Exception {
     wireMockServer.stubFor(get(urlEqualTo("/flight")).willReturn(
-          aResponse().withBody("{\"id\":\"sa\",\"airline\":\"Spaniards Airlines\",\"price\":200}")
-              .withFixedDelay(100)));
+            aResponse().withBody("{\"id\":\"sa\",\"airline\":\"Spaniards Airlines\",\"price\":200}")
+                .withFixedDelay(100)));
 
     FlightsBusiness business = new FlightsBusiness(new String[] { WIREMOCK_URL });
     Flight result = business.flightsObservable().toBlocking().single();
