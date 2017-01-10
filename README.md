@@ -24,3 +24,7 @@ The workshop will have two main parts:
   - `SuggestUnitTest` is great to have the flights but we need to choose where do we want to fly and to do it, why don't we implement a suggest?
 
 the `frodo` module is just an example of the frodo library from Fernando Cejas.
+
+Slides used at the workshop
+---------------------------
+https://docs.google.com/presentation/d/1cI88EoPKLrkivajuIpTLCdhBBYlPUZYHcuBiLu_Stug/edit?usp=sharing
